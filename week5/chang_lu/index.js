@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 
 // listen on the connection/disconnection event for incoming sockets and log it to the console
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  io.emit('new user joined');
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
