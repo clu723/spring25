@@ -48,9 +48,19 @@
   
     // when receiving messages
     socket.on('chat message', function(msg) {
-      var item = document.createElement('l  i');
+      var item = document.createElement('li');
       item.textContent = msg;
       messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    // when user first loads up page, load saved msgs from db
+    socket.on('display msgs', function(msgs) {
+      msgs.forEach(element => {
+        var item = document.createElement('li');
+        item.textContent = element;
+        messages.appendChild(item);
+      });
       window.scrollTo(0, document.body.scrollHeight);
     });
   </script>

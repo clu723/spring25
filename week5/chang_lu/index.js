@@ -17,17 +17,22 @@ const messageModel = mongoose.model("Message", messageSchema);
 // initialize a new instance of socket.io by passing the server (the HTTP server) object
 const io = new Server(server);
 
-// app.get('/', (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
-
-app.get('/messsages', async function(req, res) {
-  res.json(await messagesModel.find());
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
 });
 
-// listen on the connection/disconnection event for incoming sockets and log it to the console
-io.on('connection', (socket) => {
+app.get('/messages', async function(req, res){
+  res.json(await messageModel.find());
+});
+
+// listen on the connection/disconnection event for incoming sockets
+io.on ('connection', async (socket) => {
   io.emit('new user joined');
+
+  // display saved msgs from db
+  const msgs = await messageModel.find(); 
+  const contents = msgs.map(msg => msg.content); 
+  socket.emit('display msgs', contents);
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
