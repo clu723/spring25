@@ -14,7 +14,9 @@ function ShoppingList({ shoppingList, removeItem, budget }) {
                     key={index}
                 >
                     <span>{val.name}</span>
-                    <span>{val.cost}</span>
+                    <p>Cost: ${val.cost}</p>
+                    <p>Category: {val.category}</p>
+                    <p>Due: {val.dueDate}</p>
                     <span>
                         <button className='btn' onClick={removeItem} value={val.name}>x</button>
                     </span>
